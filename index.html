@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+</head>
+
+<body>
+    <h1>Instructions:</h1>
+    <ol>
+        <li>
+            <b>createTask(taskContent)</b>
+            <span>Function takes a string as an argument and passing it to task content.</span>
+        </li>
+        <li>
+            <b>showTasks(filter)</b>
+            <span>By default function shows list of all tasks.
+                <br>Optional arguments <i>'done'</i> and <i>'undone'</i> shows tasks with corresponding filter. </span>
+        </li>
+        <li>
+            <b>deleteTask(taskId)</b>
+            <span>Function removes selected task from list.</span>
+        </li>
+        <li>
+            <b>markTask(taskId, deleteTask = false)</b>
+            <span>Function cyclically marks selected task as completed.
+                <br>Optional argument <i>deleteTask</i> instantly deletes marked task from list.</span>
+        </li>
+        <li>
+            <b>clearTaskList()</b>
+            <span>Function clears task list as well as browser local storage.</span>
+        </li>
+    </ol>
+    <script src="todo.js"></script>
+</body>
+
+</html>
