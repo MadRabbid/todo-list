@@ -39,11 +39,9 @@
     }
 
     function markTask(id) {
-        let status = taskList[id];
+        let task = taskList[id];
         try {
-            status.isDone ?
-                status.isDone = false :
-                status.isDone = true;
+            task.isDone = !task.isDone;
             saveTaskList();
         } catch {
             console.error('There is no task with these id.');
