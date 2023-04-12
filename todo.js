@@ -7,13 +7,14 @@
             done: false,
         }
         taskList.push(task);
-        saveTaskList();
+        saveTaskList()
     }
 
     function showTasks(filter) {
         for (let i = 0; i < taskList.length; i++) {
             let text = `${i}. ${taskList[i].content}`;
-            let listItem = taskList[i].done ? '[x] ' + text : '[ ] ' + text;
+            const markTask = taskList[i].done ? 'x'  : ' ';
+            const listItem = `[${markTask}] ${text}`;
             if (filter === undefined) {
                 console.log(listItem);
             } else if (filter === 'done') {
@@ -65,10 +66,10 @@
     }
 
     window.todo = {
-        createTask: createTask,
-        showTasks: showTasks,
-        deleteTask: deleteTask,
-        markTask: markTask,
-        clearTaskList: clearTaskList,
+        createTask,
+        showTasks,
+        deleteTask,
+        markTask,
+        clearTaskList,
     }
 })();
