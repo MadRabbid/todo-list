@@ -4,30 +4,29 @@
     const createTask = (content) => {
         let task = {
             content: content,
-            done: false,
+            isDone: false,
         }
         taskList.push(task);
-        saveTaskList()
+        saveTaskList();
+    }
+
+    function logTasks(list) {
+        list.forEach((item, index) => {
+            const markTask = item.isDone ? 'x' : ' ';
+            const text = `[${markTask}] ${index}. ${item.content}`;
+            console.log(text);
+        });
     }
 
     function showTasks(filter) {
-        for (let i = 0; i < taskList.length; i++) {
-            let text = `${i}. ${taskList[i].content}`;
-            const markTask = taskList[i].done ? 'x'  : ' ';
-            const listItem = `[${markTask}] ${text}`;
-            if (filter === undefined) {
-                console.log(listItem);
-            } else if (filter === 'done') {
-                if (taskList[i].done) {
-                    console.log(listItem);
-                }
-            } else if (filter === 'undone') {
-                if (!taskList[i].done) {
-                    console.log(listItem);
-                }
-            }
+        switch (filter) {
+            case 'done':
+                return logTasks(taskList.filter(item => item.isDone));
+            case 'undone':
+                return logTasks(taskList.filter(item => !item.isDone));
+            default:
+                return logTasks(taskList);
         }
-        saveTaskList();
     }
 
     function deleteTask(id) {
@@ -40,16 +39,16 @@
     }
 
     function markTask(id) {
-        let taskStatus = taskList[id].done;
+        let status = taskList[id];
         try {
-            taskStatus ?
-                taskStatus = false :
-                taskStatus = true;
+            status.isDone ?
+                status.isDone = false :
+                status.isDone = true;
             saveTaskList();
         } catch {
             console.error('There is no task with these id.');
         }
-        
+
     }
 
     function saveTaskList() {
