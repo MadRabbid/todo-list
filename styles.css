@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    color: #4D455D;
+}
+
+.container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E1F2F7;
+}
+
+main {
+    width: 600px;
+    max-height: 800px;
+    height: auto;
+    border-radius: 24px;
+    background-color: #edeef0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
+header {
+    text-align: center;
+    font-weight: 900;
+    font-size: 32px;
+    font-style: italic;
+    padding-top: 10px;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 30px;
+    border-radius: 64px;
+}
+
+input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 24px;
+    padding-left: 15px;
+    border-radius: 64px;
+    background: lightgrey;
+}
+
+input:focus {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+button {
+    width: 64px;
+    font-size: 48px;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-radius: 32px;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(80%);
+  }
+
+.todo {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.task {
+    font-size: 18px;
+    padding: 12px 8px 12px 60px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.task::before {
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background-color: #4D455D;
+    left: 30px;
+}
+
+.task.checked {
+    color: lightgrey;
+    text-decoration: line-through;
+}
+
+.task.checked::before {
+    background-color: #2a9d8f;
+}
+
+footer{
+    display: flex;
+    flex-direction: column;
+    height: 64px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 24px;
+}
+
+footer .wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+footer .wrapper * {
+    display: inline;
+    text-align: center;
+    width: 100px;
+    padding: 10px 20px;
+}
+
+.count {
+    align-self: center;
+    font-size: 14px;
+    color: grey;
+    padding-bottom: 10px;
+}
+
+.filter:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.filter.selected {
+    text-decoration: underline;
+}
+
+.filter.selected:hover {
+    cursor: default;
+}
