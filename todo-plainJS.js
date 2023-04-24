@@ -1,59 +1,117 @@
-
 let taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
 
-window.addEventListener('load', () => {
-    refreshTasks(taskList);
-    markTask();
+window.addEventListener('DOMContentLoaded', () => {
+    drawHTML(showTasks());
 });
-
-const createTask = () => {
-    let task = {
-        content: taskContent.value,
-        isDone: false,
-    }
-    return task;
-}
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+
     if (taskContent.value === '') {
-        console.log('no task there is <(°.°)>');;
+        console.log('Input is empty');
     } else {
-        taskList.push(createTask());
-        saveTaskList();
-        taskContent.value = '';
+        createTask(taskContent.value);
     }
-});
+    drawHTML(showTasks());
+    saveTaskList();
+    taskContent.value = '';
+}
+);
 
+for (let item of filters.children) {
+    item.addEventListener('click', () => {
+        let classes = item.classList;
 
-
-function refreshTasks(list) {
-    while (todo.firstChild) {
-        todo.removeChild(todo.firstChild);
-    }
-    list.forEach((item) => {
-        let task = document.createElement('li');
-        let classes = task.classList;
-        task.textContent = item.content;
-        classes.add('task');
-        if (item.isDone) {
-            classes.toggle('done');
+        for (let i of filters.children) {
+            i.classList.remove('selected');
         }
-        todo.append(task);
-        let count = list.filter(item => !item.isDone).length;
-        taskCount.textContent = count;
+
+        switch (item.id) {
+            case 'filterDone':
+                classes.add('selected');
+                drawHTML(showTasks('done'));
+                break;
+            case 'filterUndone':
+                classes.add('selected');
+                drawHTML(showTasks('undone'));
+                break;
+            default:
+                classes.add('selected');
+                drawHTML(showTasks());
+                break;
+        }
     });
+}
+
+const createTask = (content) => {
+    let task = {
+        content: content,
+        isDone: false,
+    }
+
+    taskList.push(task);
+    return task;
 }
 
 function showTasks(filter) {
     switch (filter) {
         case 'done':
-            return refreshTasks(taskList.filter(item => item.isDone));
+            return taskList.filter(item => item.isDone);
         case 'undone':
-            return refreshTasks(taskList.filter(item => !item.isDone));
+            return taskList.filter(item => !item.isDone);
         default:
-            return refreshTasks(taskList);
+            return taskList;
     }
+}
+
+function drawHTML(taskList) {
+    while (todo.firstChild) {
+        todo.removeChild(todo.firstChild);
+    }
+
+    taskList.forEach((item) => {
+        let task = document.createElement('li');
+        let classes = task.classList;
+        task.textContent = item.content;
+        classes.add('task');
+
+        if (item.isDone) {
+            classes.toggle('done');
+        }
+        todo.append(task);
+
+        const doneIcon = document.createElement('span');
+        doneIcon.classList.add('doneIcon');
+        task.prepend(doneIcon);
+
+        const deleteButton = document.createElement('span');
+        deleteButton.classList.add('deleteButton');
+        deleteButton.textContent = '\u00d7';
+        task.append(deleteButton);
+    });
+
+    for (let item of todo.children) {
+        const index = Array.from(todo.children).indexOf(item);
+
+        item.addEventListener('click', () => {
+            markTask(index);
+            saveTaskList();
+            drawHTML(showTasks());
+        });
+    }
+
+    const buttons = document.querySelectorAll('.task > .deleteButton');
+
+    buttons.forEach((item) => {
+        item.addEventListener('click', (event) => {
+            event.stopPropagation();
+            deleteTask(Array.from(todo.children).indexOf(item.parentNode));
+            drawHTML(showTasks());
+        });
+    });
+
+    let count = taskList.filter(item => !item.isDone).length;
+    taskCount.textContent = count;
 }
 
 function deleteTask(id) {
@@ -65,47 +123,25 @@ function deleteTask(id) {
     }
 }
 
-
-//WIP
-function markTask() {
+function markTask(id) {
     let task = taskList[id];
-    for (const taskEntry of todo.children) {
-        taskEntry.addEventListener('click', () => {
-            try {
-                taskEntry.classList.toggle('done');
-                task.isDone = !task.isDone;
-                saveTaskList();
-            } catch {
-                console.log('task marking error');
-            }
-        });
+
+    try {
+        task.isDone = !task.isDone;
+    } catch {
+        console.error('There is no task with these id.');
     }
-    // 
-    // try {
-
-    // } catch {
-    //     console.error('There is no task with these id.');
-    // }
-
 }
 
 function saveTaskList() {
     localStorage.setItem('taskList', JSON.stringify(taskList));
 }
 
-function clearTaskList() {
-    try {
-        localStorage.removeItem('taskList');
-    } catch {
-        console.error('There is no saved data.');
-    }
-    taskList = [];
-}
-
-// window.todo = {
-//     createTask,
-//     showTasks,
-//     deleteTask,
-//     markTask,
-//     clearTaskList,
+// function clearTaskList() {
+//     try {
+//         localStorage.removeItem('taskList');
+//     } catch {
+//         console.error('There is no saved data.');
+//     }
+//     taskList = [];
 // }

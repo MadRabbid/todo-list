@@ -3,7 +3,7 @@
     padding: 0;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
-    color: #4D455D;
+    color: #654E92
 }
 
 .container {
@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #E1F2F7;
+    background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
 }
 
 main {
@@ -26,10 +26,10 @@ main {
 }
 
 header {
-    text-align: center;
+    font-size: 54px;
     font-weight: 900;
-    font-size: 32px;
     font-style: italic;
+    text-align: center;
     padding-top: 10px;
 }
 
@@ -40,19 +40,25 @@ form {
     border-radius: 64px;
 }
 
-input {
+#taskContent {
     flex: 1;
     border: none;
     outline: none;
     background: transparent;
-    font-size: 24px;
-    padding-left: 15px;
+    font-size: 18px;
+    font-style: italic;
+    padding-left: 24px;
     border-radius: 64px;
-    background: lightgrey;
+    background-color: #edeef0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input:focus {
+#taskContent:focus {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+::placeholder {
+    color: #9580be;
 }
 
 button {
@@ -61,6 +67,7 @@ button {
     border: none;
     outline: none;
     background: transparent;
+    color: #98D8AA;
     border-radius: 32px;
     cursor: pointer;
 }
@@ -73,33 +80,57 @@ button:active {
     list-style: none;
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    max-height: 500px;
 }
 
 .task {
-    font-size: 24px;
-    padding: 12px 8px 12px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 12px 8px 12px 75px;
     user-select: none;
     cursor: pointer;
     position: relative;
 }
 
-.task::before {
+.doneIcon {
     content: '';
     position: absolute;
-    height: 24px;
-    width: 24px;
+    height: 32px;
+    width: 32px;
     border-radius: 50%;
-    background-color: #4D455D;
+    background-color: #edeef0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);    
     left: 30px;
 }
 
 .task.done {
+    font-weight: 400;
+    font-style: italic;
     color: lightgrey;
     text-decoration: line-through;
+
 }
 
-.task.done::before {
-    background-color: #2a9d8f;
+.task.done .doneIcon {
+    background-color: #98D8AA;
+    box-shadow: none; 
+}
+
+.deleteButton {
+    color: #FF6D60;
+    font-size: 32px;
+    font-style: normal;
+    text-decoration: none;
+    position: absolute;
+    right: 53px;
+}
+
+.deleteButton:active {
+    transform: scale(100%);
 }
 
 footer{
@@ -110,19 +141,19 @@ footer{
     margin-top: 24px;
 }
 
-footer .wrapper {
+footer #filters {
     display: flex;
     justify-content: center;
 }
 
-footer .wrapper * {
+footer #filters * {
     display: inline;
     text-align: center;
     width: 100px;
     padding: 10px 20px;
 }
 
-.info {
+.count {
     align-self: center;
     font-size: 14px;
     color: grey;

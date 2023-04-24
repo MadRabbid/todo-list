@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,400;1,900&display=swap" rel="stylesheet">
     <title>To Do App</title>
 </head>
 
@@ -16,7 +16,7 @@
     <div class="container">
         <main>
             <header>
-                YET ANOTHER TODO APP
+                Super Nice Todo App
             </header>
 
             <form id="form">
@@ -29,12 +29,12 @@
             </ul>
 
             <footer>
-                <div class="wrapper">
-                    <span class="filter">All</span>
-                    <span class="filter selected">Done</span>
-                    <span class="filter">Undone</span>
+                <div id="filters">
+                    <span id="filterAll" class="filter">All</span>
+                    <span id="filterDone" class="filter">Done</span>
+                    <span id="filterUndone" class="filter">Undone</span>
                 </div>
-                <span class="info">You have <span id="taskCount"></span> tasks left</span>
+                <span class="count">You have <span id="taskCount"></span> active tasks left</span>
             </footer>
         </main>
     </div>
