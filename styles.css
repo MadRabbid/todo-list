@@ -69,14 +69,14 @@ button:active {
     transform: scale(80%);
   }
 
-.todo {
+#todo {
     list-style: none;
     display: flex;
     flex-direction: column;
 }
 
 .task {
-    font-size: 18px;
+    font-size: 24px;
     padding: 12px 8px 12px 60px;
     user-select: none;
     cursor: pointer;
@@ -93,12 +93,12 @@ button:active {
     left: 30px;
 }
 
-.task.checked {
+.task.done {
     color: lightgrey;
     text-decoration: line-through;
 }
 
-.task.checked::before {
+.task.done::before {
     background-color: #2a9d8f;
 }
 
@@ -122,7 +122,7 @@ footer .wrapper * {
     padding: 10px 20px;
 }
 
-.count {
+.info {
     align-self: center;
     font-size: 14px;
     color: grey;
