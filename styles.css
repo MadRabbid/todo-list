@@ -96,7 +96,7 @@
     position: relative;
 }
 
-.done-icon {
+.task-done_icon {
     content: '';
     position: absolute;
     height: 32px;
@@ -115,12 +115,12 @@
 
 }
 
-.task.done .done-icon {
+.task.done .task-done_icon {
     background-color: #98D8AA;
     box-shadow: none; 
 }
 
-.delete-button {
+.task-delete_button {
     color: #FF6D60;
     font-size: 32px;
     font-style: normal;
@@ -129,7 +129,7 @@
     right: 53px;
 }
 
-.delete-button:active {
+.task-delete_button:active {
     transform: scale(100%);
 }
 

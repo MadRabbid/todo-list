@@ -7,13 +7,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+    const content = task_content.value;
 
-    if (task_content.value === '') {
+    if (content === '') {
         console.log('Input is empty');
     } else {
-        createTask(task_content.value);
+        createTask(content);
+        createTaskHTML(content);
     }
-    
+
     saveTaskList();
     refreshCount();
     task_content.value = '';
@@ -26,23 +28,81 @@ for (let item of filters.children) {
         for (let i of filters.children) {
             i.classList.remove('selected');
         }
-        refreshCount();
+
         switch (item.id) {
             case 'filter_done':
                 classes.add('selected');
                 drawHTML(filterTasks('done'));
+                refreshCount(filterTasks('done'));
                 break;
             case 'filter_undone':
                 classes.add('selected');
                 drawHTML(filterTasks('undone'));
+                refreshCount();
                 break;
             default:
                 classes.add('selected');
                 drawHTML(filterTasks());
+                refreshCount();
                 break;
         }
     });
 }
+
+todo.addEventListener('click', (event) => {
+    const index = Array.from(todo.children).indexOf(event.target);
+
+    if (event.target.parentNode === todo) {
+        event.target.classList.toggle('done');
+        console.log('test');
+        markTask(index);
+        saveTaskList();
+        refreshCount();
+    }
+});
+
+todo.addEventListener('click', (event) => {
+    const index = Array.from(todo.children).indexOf(event.target.parentNode);
+    
+    if (event.target.classList.contains('task-delete_button')){
+        event.target.parentElement.remove();
+        deleteTask(index);
+        saveTaskList();
+        refreshCount();
+    }
+});
+
+function drawHTML(taskList) {
+    while (todo.firstChild) {
+        todo.removeChild(todo.firstChild);
+    }
+
+    taskList.forEach((item) => {
+        createTaskHTML(item.content, item.isDone);
+    });
+}
+
+function createTaskHTML(content, isDone = false) {
+    const task = document.createElement('li');
+    const classes = task.classList;
+    task.textContent = content;
+    classes.add('task');
+
+    if (isDone) {
+        classes.add('done');
+    }
+
+    todo.append(task);
+
+    const doneIcon = document.createElement('span');
+    doneIcon.classList.add('task-done_icon');
+    task.prepend(doneIcon);
+
+    const deleteButton = document.createElement('span');
+    deleteButton.classList.add('task-delete_button');
+    deleteButton.textContent = '\u00d7';
+    task.append(deleteButton);
+} 
 
 const createTask = (content) => {
     let task = {
@@ -65,71 +125,8 @@ function filterTasks(filter) {
     }
 }
 
-//Question 2. The block of code below isn't working. But on the line 110 exactly the same block of code is working fine.
-
-// for (let item of todo.children) {
-//     const index = Array.from(todo.children).indexOf(item);
-
-//     item.addEventListener('click', () => {
-//         item.classList.toggle('done');
-//         markTask(index);
-//         saveTaskList();
-//     });
-// }
-
-function drawHTML(taskList) { //аргумент - список, надо переделать, чтоб считать.
-    while (todo.firstChild) {
-        todo.removeChild(todo.firstChild);
-    }
-
-    taskList.forEach((item) => {
-        const task = document.createElement('li');
-        const classes = task.classList;
-        task.textContent = item.content;
-        classes.add('task');
-
-        if (item.isDone) {
-            classes.add('done');
-        }
-        todo.append(task);
-
-        const doneIcon = document.createElement('span');
-        doneIcon.classList.add('done-icon');
-        task.prepend(doneIcon);
-
-        const deleteButton = document.createElement('span');
-        deleteButton.classList.add('delete-button');
-        deleteButton.textContent = '\u00d7';
-        task.append(deleteButton);
-    });
-
-    for (let item of todo.children) {
-        const index = Array.from(todo.children).indexOf(item);
-
-        item.addEventListener('click', () => {
-            item.classList.toggle('done');
-            markTask(index);
-            refreshCount();
-            saveTaskList();
-        });
-    }
-
-    const buttons = document.querySelectorAll('.task > .delete-button');
-
-    buttons.forEach((item) => {
-        item.addEventListener('click', (event) => {
-            const index = Array.from(todo.children).indexOf(item.parentNode);
-            event.stopPropagation();
-            item.parentElement.remove();
-            deleteTask(index);
-            refreshCount();
-            saveTaskList();
-        });
-    });
-}
-
-function refreshCount() {
-    let count = taskList.filter(item => !item.isDone).length;
+function refreshCount(list = taskList) {
+    let count = list.filter(item => !item.isDone).length;
     task_count.textContent = count;
 }
 
