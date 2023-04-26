@@ -13,28 +13,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <main>
-            <header>
+    <div class="todo-app_container">
+        <main class="todo-app_main">
+            <header class="todo-app_header">
                 Super Nice Todo App
             </header>
 
-            <form id="form">
-                <input type="text" id="taskContent" placeholder="Add new task here">
-                <button type="submit" id="button">+</button>
+            <form id="form" class="todo-list_form">
+                <input type="text" id="task_content" class="todo-list_input" placeholder="Add new task here">
+                <button type="submit" id="button" class="todo-list_button">+</button>
             </form>
 
-            <ul id="todo">
+            <ul id="todo" class="todo-list_content">
                 
             </ul>
 
-            <footer>
-                <div id="filters">
-                    <span id="filterAll" class="filter">All</span>
-                    <span id="filterDone" class="filter">Done</span>
-                    <span id="filterUndone" class="filter">Undone</span>
+            <footer class="todo-app_footer">
+                <div id="filters" class="todo-filters_wrapper">
+                    <span id="filter_all" class="todo-filter">All</span>
+                    <span id="filter_done" class="todo-filter">Done</span>
+                    <span id="filter_undone" class="todo-filter">Undone</span>
                 </div>
-                <span class="count">You have <span id="taskCount"></span> active tasks left</span>
+                <span class="todo-app_task-count">You have <span id="task_count"></span> active tasks left</span>
             </footer>
         </main>
     </div>

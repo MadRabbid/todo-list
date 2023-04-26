@@ -6,7 +6,7 @@
     color: #654E92
 }
 
-.container {
+.todo-app_container {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -16,7 +16,7 @@
     background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
 }
 
-main {
+.todo-app_main {
     width: 600px;
     max-height: 800px;
     height: auto;
@@ -25,7 +25,7 @@ main {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
 }
 
-header {
+.todo-app_header {
     font-size: 54px;
     font-weight: 900;
     font-style: italic;
@@ -33,14 +33,14 @@ header {
     padding-top: 10px;
 }
 
-form {
+.todo-list_form {
     display: flex;
     justify-content: space-between;
     margin: 10px 30px;
     border-radius: 64px;
 }
 
-#taskContent {
+.todo-list_input {
     flex: 1;
     border: none;
     outline: none;
@@ -53,15 +53,15 @@ form {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#taskContent:focus {
+.todo-list_input:focus {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
-::placeholder {
+.todo-list_input::placeholder {
     color: #9580be;
 }
 
-button {
+.todo-list_button {
     width: 64px;
     font-size: 48px;
     border: none;
@@ -72,11 +72,11 @@ button {
     cursor: pointer;
 }
 
-button:active {
+.todo-list_button:active {
     transform: scale(80%);
   }
 
-#todo {
+.todo-list_content {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -96,7 +96,7 @@ button:active {
     position: relative;
 }
 
-.doneIcon {
+.done-icon {
     content: '';
     position: absolute;
     height: 32px;
@@ -115,12 +115,12 @@ button:active {
 
 }
 
-.task.done .doneIcon {
+.task.done .done-icon {
     background-color: #98D8AA;
     box-shadow: none; 
 }
 
-.deleteButton {
+.delete-button {
     color: #FF6D60;
     font-size: 32px;
     font-style: normal;
@@ -129,11 +129,11 @@ button:active {
     right: 53px;
 }
 
-.deleteButton:active {
+.delete-button:active {
     transform: scale(100%);
 }
 
-footer{
+.todo-app_footer{
     display: flex;
     flex-direction: column;
     height: 64px;
@@ -141,34 +141,33 @@ footer{
     margin-top: 24px;
 }
 
-footer #filters {
+.todo-app_footer .todo-filters_wrapper {
     display: flex;
     justify-content: center;
 }
-
-footer #filters * {
+.todo-app_footer .todo-filters_wrapper * {
     display: inline;
     text-align: center;
     width: 100px;
     padding: 10px 20px;
 }
 
-.count {
+.todo-app_task-count {
     align-self: center;
     font-size: 14px;
     color: grey;
     padding-bottom: 10px;
 }
 
-.filter:hover {
+.todo-filter:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.filter.selected {
+.todo-filter.selected {
     text-decoration: underline;
 }
 
-.filter.selected:hover {
+.todo-filter.selected:hover {
     cursor: default;
 }

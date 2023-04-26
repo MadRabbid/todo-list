@@ -1,22 +1,23 @@
 let taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
 
 window.addEventListener('DOMContentLoaded', () => {
-    drawHTML(showTasks());
+    drawHTML(filterTasks());
+    refreshCount();
 });
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    if (taskContent.value === '') {
+    if (task_content.value === '') {
         console.log('Input is empty');
     } else {
-        createTask(taskContent.value);
+        createTask(task_content.value);
     }
-    drawHTML(showTasks());
+    
     saveTaskList();
-    taskContent.value = '';
-}
-);
+    refreshCount();
+    task_content.value = '';
+});
 
 for (let item of filters.children) {
     item.addEventListener('click', () => {
@@ -25,19 +26,19 @@ for (let item of filters.children) {
         for (let i of filters.children) {
             i.classList.remove('selected');
         }
-
+        refreshCount();
         switch (item.id) {
-            case 'filterDone':
+            case 'filter_done':
                 classes.add('selected');
-                drawHTML(showTasks('done'));
+                drawHTML(filterTasks('done'));
                 break;
-            case 'filterUndone':
+            case 'filter_undone':
                 classes.add('selected');
-                drawHTML(showTasks('undone'));
+                drawHTML(filterTasks('undone'));
                 break;
             default:
                 classes.add('selected');
-                drawHTML(showTasks());
+                drawHTML(filterTasks());
                 break;
         }
     });
@@ -53,7 +54,7 @@ const createTask = (content) => {
     return task;
 }
 
-function showTasks(filter) {
+function filterTasks(filter) {
     switch (filter) {
         case 'done':
             return taskList.filter(item => item.isDone);
@@ -64,28 +65,40 @@ function showTasks(filter) {
     }
 }
 
-function drawHTML(taskList) {
+//Question 2. The block of code below isn't working. But on the line 110 exactly the same block of code is working fine.
+
+// for (let item of todo.children) {
+//     const index = Array.from(todo.children).indexOf(item);
+
+//     item.addEventListener('click', () => {
+//         item.classList.toggle('done');
+//         markTask(index);
+//         saveTaskList();
+//     });
+// }
+
+function drawHTML(taskList) { //аргумент - список, надо переделать, чтоб считать.
     while (todo.firstChild) {
         todo.removeChild(todo.firstChild);
     }
 
     taskList.forEach((item) => {
-        let task = document.createElement('li');
-        let classes = task.classList;
+        const task = document.createElement('li');
+        const classes = task.classList;
         task.textContent = item.content;
         classes.add('task');
 
         if (item.isDone) {
-            classes.toggle('done');
+            classes.add('done');
         }
         todo.append(task);
 
         const doneIcon = document.createElement('span');
-        doneIcon.classList.add('doneIcon');
+        doneIcon.classList.add('done-icon');
         task.prepend(doneIcon);
 
         const deleteButton = document.createElement('span');
-        deleteButton.classList.add('deleteButton');
+        deleteButton.classList.add('delete-button');
         deleteButton.textContent = '\u00d7';
         task.append(deleteButton);
     });
@@ -94,24 +107,30 @@ function drawHTML(taskList) {
         const index = Array.from(todo.children).indexOf(item);
 
         item.addEventListener('click', () => {
+            item.classList.toggle('done');
             markTask(index);
+            refreshCount();
             saveTaskList();
-            drawHTML(showTasks());
         });
     }
 
-    const buttons = document.querySelectorAll('.task > .deleteButton');
+    const buttons = document.querySelectorAll('.task > .delete-button');
 
     buttons.forEach((item) => {
         item.addEventListener('click', (event) => {
+            const index = Array.from(todo.children).indexOf(item.parentNode);
             event.stopPropagation();
-            deleteTask(Array.from(todo.children).indexOf(item.parentNode));
-            drawHTML(showTasks());
+            item.parentElement.remove();
+            deleteTask(index);
+            refreshCount();
+            saveTaskList();
         });
     });
+}
 
+function refreshCount() {
     let count = taskList.filter(item => !item.isDone).length;
-    taskCount.textContent = count;
+    task_count.textContent = count;
 }
 
 function deleteTask(id) {
