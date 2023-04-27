@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const content = task_content.value;
+    const content = document.getElementById('task_content').value;
 
     if (content === '') {
         console.log('Input is empty');
@@ -18,7 +18,7 @@ form.addEventListener('submit', (event) => {
 
     saveTaskList();
     refreshCount();
-    task_content.value = '';
+    document.getElementById('task_content').value = '';
 });
 
 for (let item of filters.children) {
@@ -143,12 +143,3 @@ function markTask(id) {
 function saveTaskList() {
     localStorage.setItem('taskList', JSON.stringify(taskList));
 }
-
-// function clearTaskList() {
-//     try {
-//         localStorage.removeItem('taskList');
-//     } catch {
-//         console.error('There is no saved data.');
-//     }
-//     taskList = [];
-// }
