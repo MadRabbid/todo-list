@@ -152,11 +152,13 @@
     padding: 10px 20px;
 }
 
-.todo-app_task-count {
-    align-self: center;
-    font-size: 14px;
-    color: grey;
-    padding-bottom: 10px;
+.radio {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio:checked + .todo-filter {
+    text-decoration: underline;
 }
 
 .todo-filter:hover {
@@ -164,10 +166,13 @@
     cursor: pointer;
 }
 
-.todo-filter.selected {
-    text-decoration: underline;
-}
-
 .todo-filter.selected:hover {
     cursor: default;
+}
+
+.todo-app_task-count {
+    align-self: center;
+    font-size: 14px;
+    color: grey;
+    padding-bottom: 10px;
 }

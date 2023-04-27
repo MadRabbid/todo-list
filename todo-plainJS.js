@@ -23,25 +23,16 @@ form.addEventListener('submit', (event) => {
 
 for (let item of filters.children) {
     item.addEventListener('click', () => {
-        let classes = item.classList;
-
-        for (let i of filters.children) {
-            i.classList.remove('selected');
-        }
-
         switch (item.id) {
             case 'filter_done':
-                classes.add('selected');
                 drawHTML(filterTasks('done'));
                 refreshCount(filterTasks('done'));
                 break;
             case 'filter_undone':
-                classes.add('selected');
                 drawHTML(filterTasks('undone'));
                 refreshCount();
                 break;
             default:
-                classes.add('selected');
                 drawHTML(filterTasks());
                 refreshCount();
                 break;
@@ -104,7 +95,7 @@ function createTaskHTML(content, isDone = false) {
     task.append(deleteButton);
 } 
 
-const createTask = (content) => {
+function createTask(content) {
     let task = {
         content: content,
         isDone: false,
