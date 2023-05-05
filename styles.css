@@ -88,31 +88,47 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
+    padding: 12px 8px 12px 40px;
+    user-select: none;
+    position: relative;
+    max-width: 555px;
+}
+
+.task-button_mark {
+    display: flex;
+    border: none;
+    flex-grow: 1;
+    cursor: pointer;
+    background-color: #edeef0;
+}
+
+.task-content {
+    align-self: center;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 20px;
     font-weight: 400;
-    padding: 12px 8px 12px 75px;
-    user-select: none;
-    cursor: pointer;
-    position: relative;
 }
 
 .task-done_icon {
+    display: block;
     content: '';
-    position: absolute;
     height: 32px;
     width: 32px;
     border-radius: 50%;
     background-color: #edeef0;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-    left: 30px;
+    border: none;
+    flex-shrink: 0;
 }
 
-.task.done {
+.task.done .task-content {
     font-weight: 400;
     font-style: italic;
     color: lightgrey;
     text-decoration: line-through;
-
 }
 
 .task.done .task-done_icon {
@@ -125,12 +141,16 @@
     font-size: 32px;
     font-style: normal;
     text-decoration: none;
-    position: absolute;
-    right: 53px;
+    border: none;
+    background-color: #edeef0;
+}
+
+.task-delete_button:hover {
+    cursor: pointer;
 }
 
 .task-delete_button:active {
-    transform: scale(100%);
+    transform: scale(80%);
 }
 
 .todo-app_footer {
@@ -165,10 +185,6 @@
 .todo-filter:hover {
     text-decoration: underline;
     cursor: pointer;
-}
-
-.todo-filter.selected:hover {
-    cursor: default;
 }
 
 .todo-app_task-count {

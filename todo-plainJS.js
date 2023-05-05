@@ -5,68 +5,45 @@ window.addEventListener('DOMContentLoaded', () => {
     refreshCount();
 });
 
-form.addEventListener('submit', (event) => {
+const todo_form = document.getElementById('form');
+todo_form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const content = document.getElementById('task_content').value;
+    const taskContent = document.getElementById('task_content');
+    const content = taskContent.value;
 
     if (content === '') {
         console.log('Input is empty');
     } else {
-        createTask(content);
-        createTaskHTML(content);
+        createTaskHTML(createTask(content));
     }
 
     saveTaskList();
     refreshCount();
-    document.getElementById('task_content').value = '';
+    taskContent.value = '';
 });
 
-for (let item of filters.children) {
-    item.addEventListener('click', () => {
-        switch (item.id) {
-            case 'filter_done':
-                drawHTML(filterTasks('done'));
-                refreshCount(filterTasks('done'));
-                break;
-            case 'filter_undone':
-                drawHTML(filterTasks('undone'));
-                refreshCount();
-                break;
-            default:
-                drawHTML(filterTasks());
-                refreshCount();
-                break;
-        }
-    });
-}
-
-todo.addEventListener('click', (event) => {
-    const index = Array.from(todo.children).indexOf(event.target);
-
-    if (event.target.parentNode === todo) {
-        event.target.classList.toggle('done');
-        console.log('test');
-        markTask(index);
-        saveTaskList();
-        refreshCount();
-    }
+const filterAll = document.getElementById('filter_all');
+filterAll.addEventListener('click', () => {
+    drawHTML(filterTasks());
+    refreshCount();
+    //                 
 });
 
-todo.addEventListener('click', (event) => {
-    const index = Array.from(todo.children).indexOf(event.target.parentNode);
-    
-    if (event.target.classList.contains('task-delete_button')){
-        event.target.parentElement.remove();
-        deleteTask(index);
-        saveTaskList();
-        refreshCount();
-    }
+const filterDone = document.getElementById('filter_done');
+filterDone.addEventListener('click', () => {
+    drawHTML(filterTasks('done'));
+    refreshCount(filterTasks('done'));
+});
+
+const filterUndone = document.getElementById('filter_done');
+filterDone.addEventListener('click', () => {
+    drawHTML(filterTasks('undone'));
+    refreshCount(filterTasks('undone'));
 });
 
 function drawHTML(taskList) {
-    while (todo.firstChild) {
-        todo.removeChild(todo.firstChild);
-    }
+    const todo = document.getElementById('todo');
+    todo.innerHTML = '';
 
     taskList.forEach((item) => {
         createTaskHTML(item.content, item.isDone);
@@ -74,31 +51,64 @@ function drawHTML(taskList) {
 }
 
 function createTaskHTML(content, isDone = false) {
+    const todoList = document.getElementById('todo');
     const task = document.createElement('li');
     const classes = task.classList;
-    task.textContent = content;
     classes.add('task');
 
     if (isDone) {
         classes.add('done');
     }
 
-    todo.append(task);
+    todoList.append(task);
+
+    const taskButton = document.createElement('button');
+    taskButton.type = 'button';
+    taskButton.classList.add('task-button_mark');
+    taskButton.addEventListener('click', (event) => {
+        const index = Array.from(todoList.children).indexOf(event.target.parentElement.parentElement);
+        task.classList.toggle('done');
+        markTask(index);
+        saveTaskList();
+        refreshCount();
+    });
+    task.append(taskButton);
 
     const doneIcon = document.createElement('span');
     doneIcon.classList.add('task-done_icon');
-    task.prepend(doneIcon);
+    taskButton.append(doneIcon);
 
-    const deleteButton = document.createElement('span');
+    const taskContent = document.createElement('span');
+    taskContent.textContent = content;
+    taskContent.classList.add('task-content')
+    taskButton.append(taskContent);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
     deleteButton.classList.add('task-delete_button');
     deleteButton.textContent = '\u00d7';
+    deleteButton.addEventListener('click', (event) => {
+        const index = Array.from(todoList.children).indexOf(event.target.parentElement);
+        event.target.parentElement.remove();
+        deleteTask(index);
+        saveTaskList();
+        refreshCount();
+    });
     task.append(deleteButton);
-} 
+}
+
+// stupidest id generation system of all times. don't know how to do it better
 
 function createTask(content) {
-    let task = {
+    let id = 0;
+    if (taskList.length !== 0) {
+        id = Math.max(...taskList.map(i => i.id)) + 1;
+    }
+
+    const task = {
         content: content,
         isDone: false,
+        id: id,
     }
 
     taskList.push(task);
@@ -117,8 +127,9 @@ function filterTasks(filter) {
 }
 
 function refreshCount(list = taskList) {
-    let count = list.filter(item => !item.isDone).length;
-    task_count.textContent = count;
+    const count = list.filter(item => !item.isDone).length;
+    const taskCount = document.getElementById('task_count');
+    taskCount.textContent = count;
 }
 
 function deleteTask(id) {
