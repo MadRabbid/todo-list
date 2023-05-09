@@ -112,7 +112,7 @@
     font-weight: 400;
 }
 
-.task-done_icon {
+.task-icon_done {
     display: block;
     content: '';
     height: 32px;
@@ -131,7 +131,7 @@
     text-decoration: line-through;
 }
 
-.task.done .task-done_icon {
+.task.done .task-icon_done {
     background-color: #98D8AA;
     box-shadow: none;
 }
@@ -192,4 +192,19 @@
     font-size: 14px;
     color: grey;
     padding-bottom: 10px;
+}
+
+@media all and (max-width: 600px) {
+
+    .todo-app_header {
+        font-size: 36px;
+    }
+
+    .task-delete_button {
+        padding-right: 45px;
+    }
+
+    .todo-app_container {
+        padding: 20px;
+    }
 }

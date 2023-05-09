@@ -25,8 +25,7 @@ todo_form.addEventListener('submit', (event) => {
 const filterAll = document.getElementById('filter_all');
 filterAll.addEventListener('click', () => {
     drawHTML(filterTasks());
-    refreshCount();
-    //                 
+    refreshCount();             
 });
 
 const filterDone = document.getElementById('filter_done');
@@ -46,40 +45,41 @@ function drawHTML(taskList) {
     todo.innerHTML = '';
 
     taskList.forEach((item) => {
-        createTaskHTML(item.content, item.isDone);
+        createTaskHTML(item);
     });
 }
 
-function createTaskHTML(content, isDone = false) {
+function createTaskHTML(task) {
     const todoList = document.getElementById('todo');
-    const task = document.createElement('li');
-    const classes = task.classList;
+    const taskHTML = document.createElement('li');
+    const classes = taskHTML.classList;
     classes.add('task');
+    taskHTML.dataset.taskId = task.id;
 
-    if (isDone) {
+    if (task.isDone) {
         classes.add('done');
     }
 
-    todoList.append(task);
+    todoList.append(taskHTML);
 
     const taskButton = document.createElement('button');
     taskButton.type = 'button';
     taskButton.classList.add('task-button_mark');
-    taskButton.addEventListener('click', (event) => {
-        const index = Array.from(todoList.children).indexOf(event.target.parentElement.parentElement);
-        task.classList.toggle('done');
+    taskButton.addEventListener('click', () => {
+        const index = taskHTML.dataset.taskId;
+        taskHTML.classList.toggle('done');
         markTask(index);
         saveTaskList();
         refreshCount();
     });
-    task.append(taskButton);
+    taskHTML.append(taskButton);
 
     const doneIcon = document.createElement('span');
-    doneIcon.classList.add('task-done_icon');
+    doneIcon.classList.add('task-icon_done');
     taskButton.append(doneIcon);
 
     const taskContent = document.createElement('span');
-    taskContent.textContent = content;
+    taskContent.textContent = task.content;
     taskContent.classList.add('task-content')
     taskButton.append(taskContent);
 
@@ -88,16 +88,17 @@ function createTaskHTML(content, isDone = false) {
     deleteButton.classList.add('task-delete_button');
     deleteButton.textContent = '\u00d7';
     deleteButton.addEventListener('click', (event) => {
-        const index = Array.from(todoList.children).indexOf(event.target.parentElement);
+        const index = taskHTML.dataset.taskId;
+        console.log(index);
         event.target.parentElement.remove();
         deleteTask(index);
         saveTaskList();
         refreshCount();
     });
-    task.append(deleteButton);
+    taskHTML.append(deleteButton);
 }
 
-// stupidest id generation system of all times. don't know how to do it better
+// stupidest id generation system of all times, but hey, it works. Don't know how to do it better.
 
 function createTask(content) {
     let id = 0;
@@ -132,9 +133,14 @@ function refreshCount(list = taskList) {
     taskCount.textContent = count;
 }
 
+//TODO: make delete and mark function work
+
 function deleteTask(id) {
     try {
-        taskList.splice(id, 1);
+        const item = taskList.find(item => item.id === id);
+        const task = taskList.indexOf(item);
+        console.log(item);
+        // taskList.splice(id, 1);
         saveTaskList();
     } catch {
         console.error('There is no task with these id.');
