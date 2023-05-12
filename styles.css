@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    color: #654E92
+}
+
+.todo-app_container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+}
+
+.todo-app_main {
+    width: 600px;
+    max-height: 800px;
+    height: auto;
+    border-radius: 24px;
+    background-color: #edeef0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
+.todo-app_header {
+    font-size: 54px;
+    font-weight: 900;
+    font-style: italic;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.todo-list_form {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 30px;
+    border-radius: 64px;
+}
+
+.todo-list_input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 18px;
+    font-style: italic;
+    padding-left: 24px;
+    border-radius: 64px;
+    background-color: #edeef0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.todo-list_input:focus {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.todo-list_input::placeholder {
+    color: #9580be;
+}
+
+.todo-list_button {
+    width: 64px;
+    font-size: 48px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #98D8AA;
+    border-radius: 32px;
+    cursor: pointer;
+}
+
+.todo-list_button:active {
+    transform: scale(80%);
+}
+
+.todo-list_content {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 500px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 8px 12px 40px;
+    user-select: none;
+    position: relative;
+    max-width: 555px;
+}
+
+.task-button_mark {
+    display: flex;
+    border: none;
+    flex-grow: 1;
+    cursor: pointer;
+    background-color: #edeef0;
+}
+
+.task-content {
+    align-self: center;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.task-icon_done {
+    display: block;
+    content: '';
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-color: #edeef0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    flex-shrink: 0;
+}
+
+.task.done .task-content {
+    font-weight: 400;
+    font-style: italic;
+    color: lightgrey;
+    text-decoration: line-through;
+}
+
+.task.done .task-icon_done {
+    background-color: #98D8AA;
+    box-shadow: none;
+}
+
+.task-delete_button {
+    color: #FF6D60;
+    font-size: 32px;
+    font-style: normal;
+    text-decoration: none;
+    border: none;
+    background-color: #edeef0;
+}
+
+.task-delete_button:hover {
+    cursor: pointer;
+}
+
+.task-delete_button:active {
+    transform: scale(80%);
+}
+
+.todo-app_footer {
+    display: flex;
+    flex-direction: column;
+    height: 64px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 24px;
+}
+
+.todo-app_footer .todo-filters_wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.todo-app_footer .todo-filters_wrapper * {
+    display: inline;
+    text-align: center;
+    width: 100px;
+    padding: 10px 20px;
+}
+
+.radio {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio:checked+.todo-filter {
+    text-decoration: underline;
+}
+
+.todo-filter:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.todo-app_task-count {
+    align-self: center;
+    font-size: 14px;
+    color: grey;
+    padding-bottom: 10px;
+}
+
+@media all and (max-width: 600px) {
+
+    .todo-app_header {
+        font-size: 36px;
+    }
+
+    .task-delete_button {
+        padding-right: 45px;
+    }
+
+    .todo-app_container {
+        padding: 20px;
+    }
+}
